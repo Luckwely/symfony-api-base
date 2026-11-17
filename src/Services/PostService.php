@@ -13,4 +13,8 @@ final class PostService
     public function save($post){
         return $this->postRepository->save($post);
     }
+
+     public function findlatest(): array{
+        return $this->postRepository->findLatest();
+    }
 }

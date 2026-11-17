@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\Posts;
 
+use App\Services\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,12 +10,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/posts')]
 final class ListPostController extends AbstractController
 {
-    #[Route('', name: 'posts.index', methods:['GET'])]
-    public function __invoke()
+    #[Route('', name: 'posts.index', methods: ['GET'])]
+    public function __invoke(PostService $postService)
     {
         return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/Api/Posts/ListPostController.php',
+            'posts' => $postService->findlatest()
         ]);
     }
 }

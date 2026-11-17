@@ -27,6 +27,14 @@ class PostRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
+    public function findLatest(): array
+    {
+        return $this->createQueryBuilder('p')
+                    ->orderBy('p.createdAt', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+    }
+
     //    /**
     //     * @return Post[] Returns an array of Post objects
     //     */
