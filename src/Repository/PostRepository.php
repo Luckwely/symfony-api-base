@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Dtos\CreatePostDto;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,6 +34,23 @@ class PostRepository extends ServiceEntityRepository
                     ->orderBy('p.createdAt', 'DESC')
                     ->getQuery()
                     ->getResult();
+    }
+
+    public function remove(Post $post): void
+    {
+        $this->getEntityManager()->remove($post);
+        $this->getEntityManager()->flush();
+    }
+
+    public function update(Post $post, CreatePostDto $data): Post
+    {
+        $post->setTitle($data->title);
+        $post->setDescription($data->description);
+
+        $this->getEntityManager()->flush();
+
+        return $post;
+
     }
 
     //    /**
